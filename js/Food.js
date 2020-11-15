@@ -9,12 +9,9 @@ class Food{
         background(washroom)
     }
 
-    showGarden(){
-        background(garden)
-    }
-    showBedRoom(){
-        background(bedroom)
-    }
+    //show garden function ref show washroom func above
+
+    // show bedroom function ref show washroom func above
 
 
     display(){

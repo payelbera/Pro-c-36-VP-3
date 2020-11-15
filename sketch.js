@@ -1,6 +1,6 @@
 //Create variables here
 var dog, dogImg,happyDogImg, database, foodS, foodStock;
-var feedBtn, addFoodBtn,fedTime, lastFed,foodObj // VP2
+var feedBtn, addFoodBtn,fedTime, lastFed,foodObj ;
 var bedroom, garden, washroom,gameState;
 var isFed = false;
 function preload()
@@ -8,10 +8,8 @@ function preload()
   //load images here
   dogImg = loadImage("images/dogImg.png")
   happyDogImg = loadImage("images/dogImg1.png")
-  bedroom= loadImage("images/BedRoom.png")
-  garden = loadImage("images/Garden.png") 
-  washroom= loadImage("images/Wash Room.png");
-  //sadDogImg = loadImage("sprites/")
+  //LOAD THE IMAGES OF THE 3 ROOMS
+ 
 }
 
 function setup() {
@@ -23,18 +21,15 @@ function setup() {
   dog.scale = 0.1;
   getFoodStock();
   
-  //VP2 start
+  
   feedBtn = createButton("Feed Dog")
   feedBtn.position(700,75)
   addFoodBtn = createButton("Add Food")
   addFoodBtn.position(800,75)
   foodObj = new Food();
-  //VP2 END
-
-  // read gamestate from Db
-  database.ref("gameState").on("value",function(data){
-    gameState = data.val();
-  })
+  
+  // read the value of gamestate from Db
+  
 }
 
 
@@ -45,7 +40,7 @@ function draw() {
   stroke("white")
   text("Press UP ARROW TO FEED DOG", 150, 50);
   
-  // VP2
+  
   foodObj.foodStock = foodS;
   
   readTime();
@@ -58,30 +53,25 @@ function draw() {
     getFoodStock();
     feedDog();
   })
-  //VP2 end
-
+  
   if(gameState !== "hungry"){
-
-    feedBtn.hide();
-    addFoodBtn.hide();
-    dog.visible = false;
+// hide feedbtn, addFoodBtn and dog
+    
   }
   else{
-    feedBtn.show();
-    addFoodBtn.show();
-    dog.visible = true;
+    //show feedbtn, addFoodBtn and dog
   }
 
   if(hour()===lastFed+1){
-    foodObj.showGarden();
-    updateGameState("playing")
+    // show Garden
+    //update Game State to playing
   }
   else if(hour()>=lastFed+2 && hour()<=lastFed+4){
-    foodObj.showWashRoom();
-    updateGameState("bathing")
+    //show Wash Room();
+    //update GameState to bathing
   }
   else{
-    updateGameState("hungry");
+    //update Game State to hungry
     foodObj.display();
   }
   drawSprites();
@@ -127,12 +117,8 @@ function readTime(){
   });
 }
 function readGameState(){
-database.ref("gameState").on("value",function(data){
-  gameState : data.val();
-})
+//write function to read gamestate
 }
 function updateGameState(state){
-  database.ref('/').update({
-    gameState:state
-  })
+  //write function to update gamestate
 }
